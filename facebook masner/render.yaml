@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: collection-house-messenger-bot
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: VERIFY_TOKEN
+        value: collection_house_webhook_token_2026
+      - key: PAGE_ACCESS_TOKEN
+        value: EAATYZB4sdmwcBS1i9UsKWeq0znxYqFYhmZCNoXSzJlLJwchzL8Fp6QAT21POgnyhZBUIzC90LvlRKCuYLnZAA7NUrZA2qD3GigUZCb04LyM5IrLczfGGxaSWaioJi8W8GoJRItqeNxgXOsePflGJLc5IDxDayVCbSr4zfRJ1SvFZBlLFZCSJEFobf7hJFD0uY0sKjXetnZCiAwYTvp0Any0iEgOxTFOlZBXxtbBEZBzjSiL6GbmEZCNj3P33zV64rwZDZD
+      - key: PAGE_ID
+        value: "102242299427916"
+      - key: PAGE_NAME
+        value: Collection house BD
+      - key: APP_SECRET
+        value: cdf02a146b9245f62e203b72d0ff112f
+      - key: GOOGLE_SHEETS_WEBHOOK_URL
+        value: https://script.google.com/macros/s/AKfycbyDb5x8ivcRmwTV73DN1srkcflupCKWP-fxqMNHiZs7dDxgEReGKBTRZwXIw8wz5om7/exec

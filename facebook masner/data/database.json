@@ -1,0 +1,254 @@
+{
+  "orders": [
+    {
+      "id": "ORD-9581",
+      "customerName": "Ariful Islam",
+      "phone": "01712345678",
+      "address": "Road 8, Dhanmondi, Dhaka",
+      "area": "Inside Dhaka",
+      "productName": "34CM SUS 316 Honeycomb Korai With Lid",
+      "quantity": 1,
+      "productPrice": 3190,
+      "deliveryCharge": 80,
+      "totalPrice": 3270,
+      "status": "Pending",
+      "source": "Messenger",
+      "senderId": "test_user_dhaka",
+      "notes": "কাস্টমার মেসেজ: \"Ami 34cm korai order korte chai. Name: Ariful Islam, Phone: 01712345678, Address: Road 8, Dhanmondi, Dhaka\"",
+      "createdAt": "2026-08-12T18:45:43.547Z"
+    },
+    {
+      "id": "ORD-4009",
+      "customerName": "??? ?????? ?????",
+      "phone": "01712998877",
+      "address": "???? ??, ??? ?, ?????, ????",
+      "area": "Outside Dhaka",
+      "productName": "34CM SUS 316 Honeycomb Korai With Lid",
+      "quantity": 1,
+      "productPrice": 3190,
+      "deliveryCharge": 150,
+      "totalPrice": 3340,
+      "status": "Pending",
+      "source": "Messenger",
+      "senderId": "test_user_3",
+      "notes": "কাস্টমার মেসেজ: \"Ami 34cm korai order korte chai. Name: ??? ?????? ?????, Phone: 01712998877, Address: ???? ??, ??? ?, ?????, ????\"",
+      "createdAt": "2026-08-12T18:43:50.567Z"
+    },
+    {
+      "id": "ORD-2933",
+      "customerName": "??? ?????? ?????",
+      "phone": "01712998877",
+      "address": "???? ??, ??? ?, ?????, ????",
+      "area": "Outside Dhaka",
+      "productName": "34CM SUS 316 Honeycomb Korai With Lid",
+      "quantity": 1,
+      "productPrice": 3190,
+      "deliveryCharge": 150,
+      "totalPrice": 3340,
+      "status": "Pending",
+      "source": "Messenger",
+      "senderId": "test_user_2",
+      "notes": "কাস্টমার মেসেজ: \"Ami 34cm korai order korte chai. Name: ??? ?????? ?????, Phone: 01712998877, Address: ???? ??, ??? ?, ?????, ????\"",
+      "createdAt": "2026-08-12T18:42:39.741Z"
+    },
+    {
+      "id": "ORD-2658",
+      "customerName": "সম্মানিত গ্রাহক",
+      "phone": "01712998877",
+      "address": "Ami 34cm korai order korte chai. Name: ??? ?????? ?????, Phone: 01712998877, Address: ???? ??, ??? ?, ?????, ????",
+      "area": "Outside Dhaka",
+      "productName": "34CM SUS 316 Honeycomb Korai With Lid",
+      "quantity": 1,
+      "productPrice": 3190,
+      "deliveryCharge": 150,
+      "totalPrice": 3340,
+      "status": "Pending",
+      "source": "Messenger",
+      "senderId": "test_user_1",
+      "notes": "কাস্টমার মেসেজ: \"Ami 34cm korai order korte chai. Name: ??? ?????? ?????, Phone: 01712998877, Address: ???? ??, ??? ?, ?????, ????\"",
+      "createdAt": "2026-08-12T18:41:14.244Z"
+    },
+    {
+      "id": "ORD-1001",
+      "customerName": "তানভীর আহমেদ",
+      "phone": "01711223344",
+      "address": "বাড়ি নং ১২, রোড ৫, ধানমন্ডি, ঢাকা",
+      "area": "Inside Dhaka",
+      "productName": "34CM SUS 316 Honeycomb Korai With Lid",
+      "quantity": 1,
+      "productPrice": 3190,
+      "deliveryCharge": 80,
+      "totalPrice": 3270,
+      "status": "Confirmed",
+      "source": "Messenger",
+      "notes": "ক্যাশ অন ডেলিভারি। দ্রুত পাঠানোর অনুরোধ করেছেন।",
+      "createdAt": "2026-08-12T13:40:17.041Z"
+    },
+    {
+      "id": "ORD-1002",
+      "customerName": "সুলতানা রাজিয়া",
+      "phone": "01899887766",
+      "address": "জিইসি মোড়, নাসিরাবাদ, চট্টগ্রাম",
+      "area": "Outside Dhaka",
+      "productName": "Airtight Food Storage Glass Jars 3PCS Set (1000ml, 1200ml, 2000ml)",
+      "quantity": 1,
+      "productPrice": 2790,
+      "deliveryCharge": 150,
+      "totalPrice": 2940,
+      "status": "Pending",
+      "source": "Messenger",
+      "notes": "কাঁচের আইটেম ভালোমতো বাবল র‍্যাপ করে পাঠাতে হবে।",
+      "createdAt": "2026-08-12T16:40:17.042Z"
+    }
+  ],
+  "conversations": {
+    "test_user_1": [
+      {
+        "senderType": "user",
+        "text": "34cm korai er dam koto?",
+        "timestamp": "2026-08-12T18:40:54.659Z"
+      },
+      {
+        "senderType": "bot",
+        "text": "✨ **34CM SUS 316 Honeycomb Korai With Lid**\n• অফার মূল্য: মাত্র **3190 টাকা** (রেগুলার মূল্য: ৳3650)\n• বিবরণ: অরিজিনাল SUS 316 ফুড গ্রেড স্টেইনলেস স্টিল হনিকম্ব নন-স্টিক কড়াই। ঢাকনাসহ। কোনো স্ক্র্যাচ বা কোটিং ওঠার ভয় নেই।\n• ডেলিভারি: ক্যাশ অন ডেলিভারি সারা বাংলাদেশে।\n\nঅর্ডার করতে আপনার **নাম, সম্পূর্ণ ঠিকানা ও মোবাইল নাম্বার** লিখে পাঠান।",
+        "timestamp": "2026-08-12T18:40:54.685Z"
+      },
+      {
+        "senderType": "user",
+        "text": "Ami 34cm korai order korte chai. Name: ??? ?????? ?????, Phone: 01712998877, Address: ???? ??, ??? ?, ?????, ????",
+        "timestamp": "2026-08-12T18:41:14.220Z"
+      },
+      {
+        "senderType": "bot",
+        "text": "🎉 ধন্যবাদ! আপনার অর্ডারটি সফলভাবে গ্রহণ করা হয়েছে।\n\n📦 **অর্ডার সামারি:**\n• অর্ডার আইডি: #ORD-2658\n• প্রোডাক্ট: 34CM SUS 316 Honeycomb Korai With Lid\n• প্রোডাক্ট মূল্য: ৳3190\n• ডেলিভারি চার্জ: ৳150 (ঢাকার বাইরে)\n• সর্বমোট মূল্য: ৳3340 (ক্যাশ অন ডেলিভারি)\n• ফোন নাম্বার: 01712998877\n\n🚚 আমাদের প্রতিনিধি খুব শীঘ্রই আপনাকে কল করে অর্ডারটি কনফার্ম করবেন এবং ২-৩ কার্যদিবসের মধ্যে ডেলিভারি পৌঁছে যাবে।\n\nযেকোনো প্রয়োজনে কল করুন: +8801727164775",
+        "timestamp": "2026-08-12T18:41:14.274Z"
+      }
+    ],
+    "test_user_2": [
+      {
+        "senderType": "user",
+        "text": "Ami 34cm korai order korte chai. Name: ??? ?????? ?????, Phone: 01712998877, Address: ???? ??, ??? ?, ?????, ????",
+        "timestamp": "2026-08-12T18:42:39.711Z"
+      },
+      {
+        "senderType": "bot",
+        "text": "🎉 ধন্যবাদ ??? ?????? ?????! আপনার অর্ডারটি সফলভাবে গ্রহণ করা হয়েছে।\n\n📦 **অর্ডার সামারি:**\n• অর্ডার আইডি: #ORD-2933\n• প্রোডাক্ট: 34CM SUS 316 Honeycomb Korai With Lid\n• প্রোডাক্ট মূল্য: ৳3190\n• ডেলিভারি চার্জ: ৳150 (ঢাকার বাইরে)\n• সর্বমোট মূল্য: ৳3340 (ক্যাশ অন ডেলিভারি)\n• ঠিকানা: ???? ??, ??? ?, ?????, ????\n• ফোন নাম্বার: 01712998877\n\n🚚 আমাদের প্রতিনিধি খুব শীঘ্রই আপনাকে কল করে অর্ডারটি কনফার্ম করবেন এবং ২-৩ কার্যদিবসের মধ্যে ডেলিভারি পৌঁছে যাবে।\n\nযেকোনো প্রয়োজনে কল করুন: +8801727164775",
+        "timestamp": "2026-08-12T18:42:39.764Z"
+      }
+    ],
+    "test_user_3": [
+      {
+        "senderType": "user",
+        "text": "Ami 34cm korai order korte chai. Name: ??? ?????? ?????, Phone: 01712998877, Address: ???? ??, ??? ?, ?????, ????",
+        "timestamp": "2026-08-12T18:43:50.518Z"
+      },
+      {
+        "senderType": "bot",
+        "text": "🎉 ধন্যবাদ ??? ?????? ?????! আপনার অর্ডারটি সফলভাবে গ্রহণ করা হয়েছে।\n\n📦 **অর্ডার সামারি:**\n• অর্ডার আইডি: #ORD-4009\n• প্রোডাক্ট: 34CM SUS 316 Honeycomb Korai With Lid\n• প্রোডাক্ট মূল্য: ৳3190\n• ডেলিভারি চার্জ: ৳150 (ঢাকার বাইরে)\n• সর্বমোট মূল্য: ৳3340 (ক্যাশ অন ডেলিভারি)\n• ঠিকানা: ???? ??, ??? ?, ?????, ????\n• ফোন নাম্বার: 01712998877\n\n🚚 আমাদের প্রতিনিধি খুব শীঘ্রই আপনাকে কল করে অর্ডারটি কনফার্ম করবেন এবং ২-৩ কার্যদিবসের মধ্যে ডেলিভারি পৌঁছে যাবে।\n\nযেকোনো প্রয়োজনে কল করুন: +8801727164775",
+        "timestamp": "2026-08-12T18:43:50.615Z"
+      }
+    ],
+    "test_user_4": [
+      {
+        "senderType": "user",
+        "text": "Ami 34cm korai order korte chai. Name: Ariful Islam, Phone: 01712345678, Address: Road 8, Dhanmondi, Dhaka",
+        "timestamp": "2026-08-12T18:44:26.757Z"
+      }
+    ],
+    "test_user_dhaka": [
+      {
+        "senderType": "user",
+        "text": "Ami 34cm korai order korte chai. Name: Ariful Islam, Phone: 01712345678, Address: Road 8, Dhanmondi, Dhaka",
+        "timestamp": "2026-08-12T18:45:43.512Z"
+      },
+      {
+        "senderType": "bot",
+        "text": "🎉 ধন্যবাদ Ariful Islam! আপনার অর্ডারটি সফলভাবে গ্রহণ করা হয়েছে।\n\n📦 **অর্ডার সামারি:**\n• অর্ডার আইডি: #ORD-9581\n• প্রোডাক্ট: 34CM SUS 316 Honeycomb Korai With Lid\n• প্রোডাক্ট মূল্য: ৳3190\n• ডেলিভারি চার্জ: ৳80 (ঢাকার ভেতরে)\n• সর্বমোট মূল্য: ৳3270 (ক্যাশ অন ডেলিভারি)\n• ঠিকানা: Road 8, Dhanmondi, Dhaka\n• ফোন নাম্বার: 01712345678\n\n🚚 আমাদের প্রতিনিধি খুব শীঘ্রই আপনাকে কল করে অর্ডারটি কনফার্ম করবেন এবং ১-২ কার্যদিবসের মধ্যে ডেলিভারি পৌঁছে যাবে।\n\nযেকোনো প্রয়োজনে কল করুন: +8801727164775",
+        "timestamp": "2026-08-12T18:45:43.586Z"
+      }
+    ],
+    "test_user_q1": [
+      {
+        "senderType": "user",
+        "text": "Airtight glass jar er dam koto?",
+        "timestamp": "2026-08-12T18:46:12.320Z"
+      },
+      {
+        "senderType": "bot",
+        "text": "✨ **Airtight Food Storage Glass Jars 3PCS Set (1000ml, 1200ml, 2000ml)**\n• অফার মূল্য: মাত্র **2790 টাকা** (রেগুলার মূল্য: ৳3450)\n• বিবরণ: ভ্যাকুয়াম গ্লাস লিডসহ ৩ পিসের এয়ারটাইট কাঁচের জার সেট। বিস্কুট, ড্রাই ফ্রুটস, ডাল, মসলা রাখার জন্য সেরা।\n• ডেলিভারি: ক্যাশ অন ডেলিভারি সারা বাংলাদেশে।\n\nঅর্ডার করতে আপনার **নাম, সম্পূর্ণ ঠিকানা ও মোবাইল নাম্বার** লিখে পাঠান।",
+        "timestamp": "2026-08-12T18:46:12.349Z"
+      }
+    ],
+    "test_user_q2": [
+      {
+        "senderType": "user",
+        "text": "Showroom kothay?",
+        "timestamp": "2026-08-12T18:46:12.501Z"
+      },
+      {
+        "senderType": "bot",
+        "text": "📍 **আমাদের আউটলেট ও শোরুমের ঠিকানা:**\n২৭/২৮, খিলগাঁও রেলগেট মার্কেট, শাহজাহানপুর, ঢাকা।\n\n📞 ফোন / হোয়াটসঅ্যাপ: +8801727164775\n🌐 ওয়েবসাইট: https://collectionhouse.com.bd/\n\nসরাসরি ভিজিট করতে পারেন অথবা ঘরে বসে ক্যাশ অন ডেলিভারিতে অর্ডার করতে পারেন!",
+        "timestamp": "2026-08-12T18:46:12.530Z"
+      }
+    ],
+    "sim_user_7936": [
+      {
+        "senderType": "user",
+        "text": "34cm korai er dam koto?",
+        "timestamp": "2026-08-12T18:48:51.944Z"
+      },
+      {
+        "senderType": "bot",
+        "text": "✨ **34CM SUS 316 Honeycomb Korai With Lid**\n• অফার মূল্য: মাত্র **3190 টাকা** (রেগুলার মূল্য: ৳3650)\n• বিবরণ: অরিজিনাল SUS 316 ফুড গ্রেড স্টেইনলেস স্টিল হনিকম্ব নন-স্টিক কড়াই। ঢাকনাসহ। কোনো স্ক্র্যাচ বা কোটিং ওঠার ভয় নেই।\n• ডেলিভারি: ক্যাশ অন ডেলিভারি সারা বাংলাদেশে।\n\nঅর্ডার করতে আপনার **নাম, সম্পূর্ণ ঠিকানা ও মোবাইল নাম্বার** লিখে পাঠান।",
+        "timestamp": "2026-08-12T18:48:51.977Z"
+      },
+      {
+        "senderType": "user",
+        "text": "Dhakar baire delivery charge koto ar koto din lagbe?",
+        "timestamp": "2026-08-12T18:48:56.949Z"
+      },
+      {
+        "senderType": "bot",
+        "text": "আমাদের হট ডিল প্রোডাক্টসমূহ:\n\n১. 34CM SUS 316 Honeycomb Korai: মাত্র ৳৩,১৯০ (অরিজিনাল SUS 316 স্টিল)\n২. 32CM SUS 316 Honeycomb Korai: মাত্র ৳২,৯৯০\n৩. 3PCS Airtight Glass Jars Set: মাত্র ৳২,৭৯০\n৪. 2-in-1 Glass Oil Sprayer 470ml: মাত্র ৳৬৫০\n\nআপনি কোন প্রোডাক্টটি সম্পর্কে জানতে চান?",
+        "timestamp": "2026-08-12T18:48:56.981Z"
+      },
+      {
+        "senderType": "user",
+        "text": "Airtight jar er 3pcs set order korbo",
+        "timestamp": "2026-08-12T18:48:59.508Z"
+      },
+      {
+        "senderType": "bot",
+        "text": "🫙 **Airtight Food Storage Glass Jars:**\n\n• **3PCS Vacuum Set (1000ml, 1200ml, 2000ml):** মাত্র ৳২,৭৯০ (রেগুলার ৳৩,৪৫০)\n• **3PCS 1000ML Set:** মাত্র ৳১,৯৯০ (রেগুলার ৳২,৬৫০)\n• **1200ML Single Jar:** মাত্র ৳৭৯০\n\n✅ হাই কোয়ালিটি ভ্যাকুয়াম গ্লাস লিড\n✅ খাবার থাকে ১০০% ময়েশ্চার ও পোকামাকড়মুক্ত\n\nঅর্ডার করতে আপনার নাম, ঠিকানা ও ফোন নাম্বার মেসেজ করুন।",
+        "timestamp": "2026-08-12T18:48:59.540Z"
+      },
+      {
+        "senderType": "user",
+        "text": "১ লিটার পানির বোতল দেওখাও",
+        "timestamp": "2026-08-12T18:49:18.891Z"
+      },
+      {
+        "senderType": "bot",
+        "text": "ধন্যবাদ আপনার মেসেজের জন্য! 😊\n**Collection House**-এ আপনার রান্নাবান্না ও কিচেন ডেকোরেশনের সেরা সামগ্রী পাওয়া যাচ্ছে।\n\nআপনি কোন প্রোডাক্ট সম্পর্কে জানতে চান বা অর্ডার করতে চান?",
+        "timestamp": "2026-08-12T18:49:18.924Z"
+      },
+      {
+        "senderType": "user",
+        "text": "পানির বোতল",
+        "timestamp": "2026-08-12T18:49:35.558Z"
+      },
+      {
+        "senderType": "bot",
+        "text": "ধন্যবাদ আপনার মেসেজের জন্য! 😊\n**Collection House**-এ আপনার রান্নাবান্না ও কিচেন ডেকোরেশনের সেরা সামগ্রী পাওয়া যাচ্ছে।\n\nআপনি কোন প্রোডাক্ট সম্পর্কে জানতে চান বা অর্ডার করতে চান?",
+        "timestamp": "2026-08-12T18:49:35.599Z"
+      }
+    ]
+  },
+  "settings": {
+    "botActive": true,
+    "autoOrderExtraction": true,
+    "insideDhakaCharge": 80,
+    "outsideDhakaCharge": 150,
+    "adminNotifyPhone": "01727164775"
+  }
+}

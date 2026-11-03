@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collection House – AI Messenger Bot & Order Manager</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Lucide Icons (CDN) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-logo">
+          <i data-lucide="store"></i>
+        </div>
+        <div class="brand-info">
+          <h2>Collection House</h2>
+          <span class="badge online"><span class="dot"></span> AI বট সচল আছে</span>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <button class="nav-item active" data-tab="simulator" id="tab-simulator">
+          <i data-lucide="message-square"></i>
+          <span>মেসেঞ্জার সিমুলেটর</span>
+        </button>
+        <button class="nav-item" data-tab="orders" id="tab-orders">
+          <i data-lucide="shopping-bag"></i>
+          <span>অর্ডার ম্যানেজার</span>
+          <span class="count-badge" id="sidebar-order-count">0</span>
+        </button>
+        <button class="nav-item" data-tab="products" id="tab-products">
+          <i data-lucide="package"></i>
+          <span>প্রোডাক্ট ক্যাটালগ</span>
+        </button>
+        <button class="nav-item" data-tab="meta-setup" id="tab-meta-setup">
+          <i data-lucide="settings"></i>
+          <span>মেটা সেটআপ ও সেটিংস</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="store-contact-mini">
+          <div class="contact-line"><i data-lucide="phone"></i> 01727164775</div>
+          <div class="contact-line"><i data-lucide="map-pin"></i> খিলগাঁও, ঢাকা</div>
+          <a href="https://collectionhouse.com.bd/" target="_blank" class="store-link">
+            <span>ওয়েবসাইট দেখুন</span>
+            <i data-lucide="external-link"></i>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Bar -->
+      <header class="topbar">
+        <div class="topbar-title">
+          <h1 id="page-heading">লাইভ মেসেঞ্জার টেস্ট ও সিমুলেটর</h1>
+          <p id="page-subheading">ফেসবুক পেজে কানেক্ট করার আগে কাস্টমার চ্যাট ও অটো-অর্ডার পরীক্ষা করুন</p>
+        </div>
+        <div class="topbar-actions">
+          <a href="https://collectionhouse.com.bd/" target="_blank" class="btn btn-outline">
+            <i data-lucide="globe"></i>
+            <span>collectionhouse.com.bd</span>
+          </a>
+          <button class="btn btn-primary" id="btn-quick-order">
+            <i data-lucide="plus-circle"></i>
+            <span>নতুন অর্ডার</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- TAB 1: LIVE SIMULATOR -->
+      <section class="tab-pane active" id="pane-simulator">
+        <div class="simulator-layout">
+          <!-- Chat App Mockup -->
+          <div class="messenger-mockup">
+            <div class="mockup-header">
+              <div class="chat-user">
+                <div class="avatar">CH</div>
+                <div class="user-details">
+                  <h3>Collection House</h3>
+                  <span class="user-status"><span class="status-indicator"></span> Active now (স্বয়ংক্রিয় এআই মডারেটর)</span>
+                </div>
+              </div>
+              <div class="mockup-controls">
+                <button class="icon-btn" id="btn-clear-chat" title="চ্যাট ক্লিয়ার করুন">
+                  <i data-lucide="trash-2"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Order detected flash banner -->
+            <div class="order-alert-banner" id="order-alert-banner" style="display: none;">
+              <i data-lucide="check-circle"></i>
+              <div class="banner-text">
+                <strong>নতুন অর্ডার সংরক্ষিত হয়েছে!</strong>
+                <span id="banner-order-desc">অর্ডার লিস্টে যুক্ত হয়েছে।</span>
+              </div>
+              <button class="btn-banner-view" id="btn-banner-goto-orders">অর্ডার দেখুন</button>
+            </div>
+
+            <!-- Chat Messages Container -->
+            <div class="chat-body" id="chat-body">
+              <div class="message-bubble bot">
+                <div class="msg-content">
+                  আসসালামু আলাইকুম! <strong>Collection House</strong>-এ আপনাকে স্বাগতম। 🌸<br>
+                  আমাদের প্রিমিয়াম কোয়ালিটি SUS 316 হনিকম্ব কড়াই, এয়ারটাইট গ্লাস জার ও কিচেন আইটেম কালেকশন রয়েছে।<br><br>
+                  আমি আপনাকে কীভাবে সাহায্য করতে পারি?
+                </div>
+                <div class="msg-time">এখনই</div>
+              </div>
+            </div>
+
+            <!-- Quick Reply Chips -->
+            <div class="quick-replies-bar" id="quick-replies-bar">
+              <button class="chip" data-msg="হনিকম্ব কড়াই কালেকশন দেখতে চাই">🍳 হনিকম্ব কড়াই</button>
+              <button class="chip" data-msg="এয়ারটাইট গ্লাস জার সেট এর দাম কত?">🫙 গ্লাস জার সেট</button>
+              <button class="chip" data-msg="ডেলিভারি চার্জ ও সময় কত?">💰 ডেলিভারি চার্জ</button>
+              <button class="chip" data-msg="অর্ডার করার নিয়ম কী?">🛒 অর্ডার করার নিয়ম</button>
+              <button class="chip" data-msg="শোরুমের ঠিকানা কোথায়?">📍 শোরুমের ঠিকানা</button>
+            </div>
+
+            <!-- Typing Indicator -->
+            <div class="typing-indicator" id="typing-indicator" style="display: none;">
+              <span></span><span></span><span></span>
+            </div>
+
+            <!-- Input Box -->
+            <form class="chat-input-box" id="chat-form">
+              <input type="text" id="chat-input" placeholder="কাস্টমারের মতো মেসেজ লিখুন (যেমন: কড়াইয়ের দাম কত? বা নাম, ফোন, ঠিকানা)..." autocomplete="off">
+              <button type="submit" class="btn-send" id="btn-send-msg">
+                <i data-lucide="send"></i>
+              </button>
+            </form>
+          </div>
+
+          <!-- Simulator Tips & Scenario Shortcuts -->
+          <div class="simulator-helper">
+            <div class="card helper-card">
+              <h3><i data-lucide="sparkles"></i> দ্রুত টেস্ট করার সিনারিও</h3>
+              <p class="text-muted">নিচের বাটনগুলোতে ক্লিক করে বটের স্বয়ংক্রিয় সেলস ও অর্ডার কালেকশন পরীক্ষা করুন:</p>
+
+              <div class="scenario-buttons">
+                <button class="scenario-btn" data-text="34cm korai er dam koto?">
+                  <strong>১. দাম জিজ্ঞেস করা</strong>
+                  <span>"34cm korai er dam koto?"</span>
+                </button>
+                <button class="scenario-btn" data-text="Dhakar baire delivery charge koto ar koto din lagbe?">
+                  <strong>২. ডেলিভারি চার্জ ও সময়</strong>
+                  <span>"Dhakar baire delivery charge koto..."</span>
+                </button>
+                <button class="scenario-btn" data-text="Airtight jar er 3pcs set order korbo">
+                  <strong>৩. প্রোডাক্ট পছন্দ করা</strong>
+                  <span>"Airtight jar er 3pcs set order korbo"</span>
+                </button>
+                <button class="scenario-btn order-highlight" data-text="Ami 34CM Korai order korte chai. Name: মো: আরিফুল ইসলাম, Phone: 01712345678, Address: বাড়ি নং ৪, রোড ৮, ধানমন্ডি, ঢাকা">
+                  <strong>🔥 ৪. স্বয়ংক্রিয় অর্ডার প্লেস (নাম + ফোন + ঠিকানা)</strong>
+                  <span>"Name: আরিফুল, Phone: 01712345678, Address: ধানমন্ডি, ঢাকা"</span>
+                </button>
+                <button class="scenario-btn" data-text="Showroom kothay? Dokane eshe nite parbo?">
+                  <strong>৫. শোরুমের ঠিকানা চাওয়া</strong>
+                  <span>"Showroom kothay? Dokane..."</span>
+                </button>
+                <button class="scenario-btn" data-text="Kono human agent er sathe kotha bolte chai">
+                  <strong>৬. হটলাইন ও এজেন্ট কল</strong>
+                  <span>"Kono human agent er sathe..."</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="card mini-stats-card">
+              <div class="mini-stat">
+                <span class="label">মোট টেস্ট অর্ডার</span>
+                <span class="value" id="sim-order-count">0</span>
+              </div>
+              <div class="mini-stat">
+                <span class="label">রেভিনিউ যোগ</span>
+                <span class="value text-success" id="sim-revenue-count">৳০</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: ORDERS MANAGER -->
+      <section class="tab-pane" id="pane-orders">
+        <!-- Stats Summary Grid -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon bg-blue"><i data-lucide="shopping-cart"></i></div>
+            <div class="stat-data">
+              <span class="stat-label">সর্বমোট অর্ডার</span>
+              <h3 class="stat-value" id="stat-total-orders">0</h3>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon bg-yellow"><i data-lucide="clock"></i></div>
+            <div class="stat-data">
+              <span class="stat-label">পেন্ডিং অর্ডার</span>
+              <h3 class="stat-value text-warning" id="stat-pending-orders">0</h3>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon bg-green"><i data-lucide="check-circle-2"></i></div>
+            <div class="stat-data">
+              <span class="stat-label">কনফার্মড অর্ডার</span>
+              <h3 class="stat-value text-success" id="stat-confirmed-orders">0</h3>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon bg-purple"><i data-lucide="badge-dollar-sign"></i></div>
+            <div class="stat-data">
+              <span class="stat-label">মোট অর্ডার মূল্য</span>
+              <h3 class="stat-value" id="stat-total-revenue">৳০</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Orders Table Card -->
+        <div class="card table-card">
+          <div class="table-toolbar">
+            <div class="search-box">
+              <i data-lucide="search"></i>
+              <input type="text" id="search-orders" placeholder="কাস্টমারের নাম, ফোন বা অর্ডার আইডি দিয়ে খুঁজুন...">
+            </div>
+            <div class="filter-group">
+              <select id="filter-status" class="select-input">
+                <option value="ALL">সব স্ট্যাটাস</option>
+                <option value="Pending">পেন্ডিং (Pending)</option>
+                <option value="Confirmed">কনফার্মড (Confirmed)</option>
+                <option value="Shipped">শিপড (Shipped)</option>
+                <option value="Delivered">ডেলিভারড (Delivered)</option>
+                <option value="Cancelled">বাতিল (Cancelled)</option>
+              </select>
+              <button class="btn btn-outline" id="btn-export-csv">
+                <i data-lucide="download"></i>
+                <span>Excel / CSV ডাউনলোড</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="orders-table" id="orders-table">
+              <thead>
+                <tr>
+                  <th>অর্ডার আইডি</th>
+                  <th>তারিখ</th>
+                  <th>কাস্টমারের নাম ও ঠিকানা</th>
+                  <th>ফোন নাম্বার</th>
+                  <th>প্রোডাক্টের বিবরণ</th>
+                  <th>সর্বমোট (টাকা)</th>
+                  <th>স্ট্যাটাস</th>
+                  <th>অ্যাকশন</th>
+                </tr>
+              </thead>
+              <tbody id="orders-tbody">
+                <!-- Orders injected by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: PRODUCT CATALOG -->
+      <section class="tab-pane" id="pane-products">
+        <div class="catalog-intro card">
+          <div class="catalog-header">
+            <div>
+              <h2><i data-lucide="package-check"></i> Collection House প্রোডাক্ট নলেজ বেস</h2>
+              <p class="text-muted">এই প্রোডাক্টগুলোর দাম, স্পেসিফিকেশন ও অফার এআই বটের ব্রেইনে স্বয়ংক্রিয়ভাবে সংযুক্ত রয়েছে।</p>
+            </div>
+            <a href="https://collectionhouse.com.bd/shop/" target="_blank" class="btn btn-outline">
+              <i data-lucide="external-link"></i>
+              <span>অনলাইন শপ ভিজিট করুন</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="products-grid" id="products-grid">
+          <!-- Products injected by JS -->
+        </div>
+      </section>
+
+      <!-- TAB 4: META SETUP & SETTINGS -->
+      <section class="tab-pane" id="pane-meta-setup">
+        <div class="settings-grid">
+          <!-- Step-by-Step Meta Connection Guide -->
+          <div class="card guide-card">
+            <h2><i data-lucide="facebook"></i> মেটা ফেসবুক পেজ কানেকশন গাইড (৪টি সহজ ধাপ)</h2>
+            <p class="text-muted">আপনার ফেসবুক পেজের সাথে এই বটটি কানেক্ট করতে নিচের ধাপগুলো অনুসরণ করুন:</p>
+
+            <div class="steps-container">
+              <div class="step-item">
+                <div class="step-num">১</div>
+                <div class="step-info">
+                  <h4>Meta Developer একাউন্টে যান</h4>
+                  <p><a href="https://developers.facebook.com/" target="_blank">developers.facebook.com</a>-এ গিয়ে <strong>Create App</strong> এ ক্লিক করুন এবং <strong>Other > Business</strong> সিলেক্ট করে অ্যাপ তৈরি করুন।</p>
+                </div>
+              </div>
+
+              <div class="step-item">
+                <div class="step-num">২</div>
+                <div class="step-info">
+                  <h4>Messenger প্রোডাক্ট যুক্ত করুন</h4>
+                  <p>অ্যাপ ড্যাশবোর্ড থেকে <strong>Messenger > Set Up</strong> সিলেক্ট করুন এবং আপনার ফেসবুক পেজটি (Collection House) অ্যাড করুন।</p>
+                </div>
+              </div>
+
+              <div class="step-item">
+                <div class="step-num">৩</div>
+                <div class="step-info">
+                  <h4>Webhook কনফিগার করুন</h4>
+                  <p><strong>Webhooks > Add Callback URL</strong> এ নিচের তথ্যগুলো দিন:</p>
+                  <div class="code-box">
+                    <div class="code-label">Callback URL:</div>
+                    <code id="display-webhook-url">https://your-public-url.com/webhook</code>
+                    <button class="btn-copy" onclick="navigator.clipboard.writeText(document.getElementById('display-webhook-url').innerText)">কপি</button>
+                  </div>
+                  <div class="code-box" style="margin-top: 8px;">
+                    <div class="code-label">Verify Token:</div>
+                    <code id="display-verify-token">collection_house_webhook_token_2026</code>
+                    <button class="btn-copy" onclick="navigator.clipboard.writeText(document.getElementById('display-verify-token').innerText)">কপি</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="step-item">
+                <div class="step-num">৪</div>
+                <div class="step-info">
+                  <h4>Page Subscriptions & Access Token</h4>
+                  <p>ওয়েবহুকে <code>messages</code> এবং <code>messaging_postbacks</code> ফিল্ডে সাবস্ক্রাইব করুন। এরপর <strong>Generate Token</strong> এ ক্লিক করে Page Access Token কপি করে নিচে সেভ করুন।</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Configuration Form -->
+          <div class="card settings-form-card">
+            <h2><i data-lucide="sliders"></i> বট ও ডেলিভারি কনফিগারেশন</h2>
+            
+            <form id="settings-form">
+              <div class="form-group">
+                <label>ডেলিভারি চার্জ (ঢাকার ভেতরে)</label>
+                <div class="input-with-icon">
+                  <input type="number" id="set-inside-dhaka" value="80">
+                  <span class="suffix">টাকা</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>ডেলিভারি চার্জ (ঢাকার বাইরে)</label>
+                <div class="input-with-icon">
+                  <input type="number" id="set-outside-dhaka" value="150">
+                  <span class="suffix">টাকা</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>অ্যাডমিন নোটিফিকেশন ফোন নম্বর</label>
+                <input type="text" id="set-admin-phone" value="01727164775">
+              </div>
+
+              <div class="form-group">
+                <label>Google Gemini API Key (ঐচ্ছিক - উন্নত এআই উত্তরের জন্য)</label>
+                <input type="password" id="set-gemini-key" placeholder="AIzaSy...">
+                <small class="text-muted">খালি রাখলে আমাদের তৈরি করা ইন্টেলিজেন্ট বাংলা NLP ইঞ্জিন ব্যবহৃত হবে।</small>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block">
+                <i data-lucide="save"></i>
+                <span>সেটিংস সেভ করুন</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Manual Order Modal -->
+  <div class="modal-overlay" id="order-modal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i data-lucide="plus-circle"></i> নতুন ম্যানুয়াল অর্ডার এন্ট্রি</h3>
+        <button class="btn-close" id="btn-close-modal"><i data-lucide="x"></i></button>
+      </div>
+      <form id="manual-order-form">
+        <div class="form-group">
+          <label>কাস্টমারের নাম</label>
+          <input type="text" id="modal-cust-name" required placeholder="যেমন: মো: আরিফুল ইসলাম">
+        </div>
+        <div class="form-group">
+          <label>মোবাইল নাম্বার</label>
+          <input type="text" id="modal-cust-phone" required placeholder="017XXXXXXXX">
+        </div>
+        <div class="form-group">
+          <label>সম্পূর্ণ ঠিকানা</label>
+          <textarea id="modal-cust-address" required placeholder="বাসা/রোড, এলাকা, থানা, জেলা"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>প্রোডাক্ট</label>
+            <select id="modal-prod-select">
+              <option value="34CM SUS 316 Honeycomb Korai With Lid" data-price="3190">34CM SUS 316 Honeycomb Korai (৳3,190)</option>
+              <option value="32CM SUS 316 Honeycomb Korai With Lid" data-price="2990">32CM SUS 316 Honeycomb Korai (৳2,990)</option>
+              <option value="28CM SUS 316 Honeycomb Korai With Lid" data-price="2490">28CM SUS 316 Honeycomb Korai (৳2,490)</option>
+              <option value="Airtight Food Storage Glass Jars 3PCS Set" data-price="2790">Airtight Glass Jars 3PCS Set (৳2,790)</option>
+              <option value="2 In 1 Glass Olive Oil Sprayer 470ml" data-price="650">2 In 1 Glass Oil Sprayer (৳650)</option>
+              <option value="Glass Water Bottle" data-price="550">Glass Water Bottle (৳550)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>পরিমাণ</label>
+            <input type="number" id="modal-prod-qty" value="1" min="1">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>এলাকা</label>
+          <select id="modal-area-select">
+            <option value="Inside Dhaka">ঢাকার ভেতরে (ডেলিভারি ৮০৳)</option>
+            <option value="Outside Dhaka">ঢাকার বাইরে (ডেলিভারি ১৫০৳)</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="btn-cancel-modal">বাতিল</button>
+          <button type="submit" class="btn btn-primary">অর্ডার সেভ করুন</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

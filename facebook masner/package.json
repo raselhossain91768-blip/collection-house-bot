@@ -1,0 +1,21 @@
+{
+  "name": "collection-house-messenger-bot",
+  "version": "1.0.0",
+  "description": "AI Facebook Messenger Bot & Order Management System for Collection House (collectionhouse.com.bd)",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "facebook-messenger",
+    "ai-chatbot",
+    "ecommerce",
+    "bangladesh",
+    "meta-webhook",
+    "collection-house"
+  ],
+  "author": "Collection House",
+  "license": "ISC"
+}
