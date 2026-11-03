@@ -179,8 +179,40 @@ const server = http.createServer(async (req, res) => {
 
               // If customer sent an image attachment
               if (imageUrl) {
-                const matched = aiService.identifyProduct(userText);
-                const product = matched || config.store.products.find(p => p.id === 'wavy-glass-mug') || config.store.products[0];
+                let product = null;
+
+                // 1. Multimodal Vision AI: Gemini analyzes image & matches catalog
+                if (typeof aiService.identifyProductWithVision === 'function') {
+                  try {
+                    product = await aiService.identifyProductWithVision(imageUrl);
+                    if (product) {
+                      console.log('✅ Vision AI matched product:', product.name);
+                    }
+                  } catch (vErr) {
+                    console.error('Vision AI error:', vErr.message);
+                  }
+                }
+
+                // 2. If not matched by vision, match by text caption if provided
+                if (!product && userText && userText !== 'ছবি পাঠালাম, দাম ও বিস্তারিত কত?') {
+                  product = (typeof aiService.identifyProduct === 'function') ? aiService.identifyProduct(userText) : null;
+                }
+
+                // 3. Check recent conversation history if image has no descriptive caption
+                if (!product) {
+                  const history = dbService.getConversation(senderPsid);
+                  if (history && history.length > 0) {
+                    for (let i = history.length - 1; i >= 0; i--) {
+                      const hProd = (typeof aiService.identifyProduct === 'function') ? aiService.identifyProduct(history[i].text || '') : null;
+                      if (hProd) { product = hProd; break; }
+                    }
+                  }
+                }
+
+                // 4. Default to top featured product (Ceramic Mug Set)
+                if (!product) {
+                  product = config.store.products.find(p => p.id === 'ceramic-mug-2pcs') || config.store.products[0];
+                }
 
                 replyText = `✨ আপনার পাঠানো প্রোডাক্টটি আমাদের স্টোরে এভেইলেবল আছে! 🌸\n\n` +
                   `📌 **${product.name}**\n` +
@@ -196,21 +228,47 @@ const server = http.createServer(async (req, res) => {
 
                 dbService.saveMessage(senderPsid, 'user', `[ছবি পাঠিয়েছে] ${userText}`);
               } else {
-                // Standard text / inquiry processing
-                dbService.saveMessage(senderPsid, 'user', userText);
-                const history = dbService.getConversation(senderPsid);
-                const response = await aiService.processMessage(userText, senderPsid, history);
-                replyText = response.reply;
-                quickReplies = response.quickReplies;
-                if (response.product && response.product.imageUrl) {
-                  websiteImageUrl = response.product.imageUrl;
+                // Check if user requested website catalog
+                const lowerText = (userText || '').toLowerCase();
+                if (lowerText.includes('website') || lowerText.includes('ওয়েবসাইট') || lowerText.includes('সকল পণ্য') || lowerText.includes('ক্যাটালগ')) {
+                  replyText = `আমাদের ওয়েবসাইট থেকে দাম জানতে এক্টূ কষ্ট করে আপনার পছন্দের ক্যাটাগরিতে যাবেন ।\n\n` +
+                    `পানির বোতল 🔗\nhttps://collectionhouse.com.bd/product-category/crockeries-bazarcrockeries-items/glass-water-bottle-crockeries-bazarcrockeries-items/\n\n` +
+                    `কাচের জার 🔗\nhttps://collectionhouse.com.bd/product-category/crockeries-bazarcrockeries-items/glass-jars-and-kitchen-accessories-crockeries-bazarcrockeries-items/\n\n` +
+                    `কিচেন এক্সসরিজ 🔗\nhttps://collectionhouse.com.bd/product-category/crockeries-bazarcrockeries-items/kitchenware-and-homeware-crockeries-bazarcrockeries-items/\n\n` +
+                    `সকল পণ্য 🔗\nhttps://collectionhouse.com.bd`;
+                  quickReplies = ['💧 পানির বোতল', '🫙 কাচের জার', '🍳 কিচেন এক্সসরিজ', '🌐 সকল পণ্য'];
+                } else {
+                  // Standard text / inquiry processing
+                  dbService.saveMessage(senderPsid, 'user', userText);
+                  const history = dbService.getConversation(senderPsid);
+                  const response = await aiService.processMessage(userText, senderPsid, history);
+                  replyText = response.reply;
+                  quickReplies = response.quickReplies;
+                  if (response.product && response.product.imageUrl) {
+                    websiteImageUrl = response.product.imageUrl;
+                  }
                 }
               }
 
               // Send official website image first if available
               if (websiteImageUrl) {
                 try {
-                  await messengerService.sendImage(senderPsid, websiteImageUrl);
+                  if (typeof messengerService.sendImage === 'function') {
+                    await messengerService.sendImage(senderPsid, websiteImageUrl);
+                  } else {
+                    await messengerService.sendPayload({
+                      recipient: { id: senderPsid },
+                      message: {
+                        attachment: {
+                          type: 'image',
+                          payload: {
+                            url: websiteImageUrl,
+                            is_reusable: true
+                          }
+                        }
+                      }
+                    });
+                  }
                 } catch (imgErr) {
                   console.error('Failed to send product image:', imgErr);
                 }

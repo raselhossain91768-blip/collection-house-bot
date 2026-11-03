@@ -56,8 +56,8 @@ const config = {
 
   // AI Service API keys
   ai: {
-    geminiApiKey: process.env.GEMINI_API_KEY || '',
-    geminiModel: process.env.GEMINI_MODEL || 'gemini-1.5-flash'
+    geminiApiKey: process.env.GEMINI_API_KEY || 'AQ.Ab8RN6Ki69fsFZp6Au2fUqFrzGHFRFIw828sWGkcw9oCMm54ow',
+    geminiModel: process.env.GEMINI_MODEL || 'gemini-3.5-flash-lite'
   },
 
   // Store Brand Profile & Learned Templates (Collection house BD)
@@ -139,6 +139,16 @@ https://collectionhouse.com.bd/product-category/crockeries-bazarcrockeries-items
 
     // Curated Popular Products from collectionhouse.com.bd
     products: [
+      {
+        id: 'ceramic-mug-2pcs',
+        name: '2pcs Set Ceramic Mug with Lid and Spoon 450ml (Serene & Concise)',
+        regularPrice: 2450,
+        salePrice: 1990,
+        imageUrl: 'https://collectionhouse.com.bd/wp-content/uploads/2026/10/imgi_150_IMG_1781339085252.webp',
+        category: 'Coffee & Tea Mug',
+        description: '২ পিস প্রিমিয়াম সিরামিক কফি/টি মগ সেট সাথে সিরামিক ঢাকনা ও গোল্ডেন চামচ। ৪৫০ মিলি।',
+        url: 'https://collectionhouse.com.bd/product/2pcs-set-ceramic-mug-with-lid-and-spoon-450ml/'
+      },
       {
         id: 'glass-bottle-combo',
         name: 'Glass Water Bottle With Protective Cover (1L, 1.5L, 2L)',
