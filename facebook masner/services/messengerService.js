@@ -112,6 +112,48 @@ const messengerService = {
         quick_replies: formattedReplies
       }
     });
+  },
+
+  // Send product image attachment via URL
+  async sendImage(recipientId, imageUrl) {
+    return this.sendPayload({
+      recipient: { id: recipientId },
+      message: {
+        attachment: {
+          type: 'image',
+          payload: {
+            url: imageUrl,
+            is_reusable: true
+          }
+        }
+      }
+    });
+  },
+
+  // Send rich visual product card (image + price/details + website/order buttons)
+  async sendGenericCard(recipientId, cardData) {
+    const element = {
+      title: cardData.title.length > 80 ? cardData.title.substring(0, 77) + '...' : cardData.title,
+      image_url: cardData.imageUrl,
+      subtitle: cardData.subtitle.length > 80 ? cardData.subtitle.substring(0, 77) + '...' : cardData.subtitle
+    };
+
+    if (cardData.buttons && cardData.buttons.length > 0) {
+      element.buttons = cardData.buttons;
+    }
+
+    return this.sendPayload({
+      recipient: { id: recipientId },
+      message: {
+        attachment: {
+          type: 'template',
+          payload: {
+            template_type: 'generic',
+            elements: [element]
+          }
+        }
+      }
+    });
   }
 };
 

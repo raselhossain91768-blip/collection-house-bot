@@ -40,8 +40,30 @@ function extractAddress(text) {
 
 // Helper: Identify which product the user might be talking about
 function identifyProduct(text) {
-  const lower = text.toLowerCase();
-  
+  const lower = (text || '').toLowerCase();
+
+  // Wavy / Ripple Glass Coffee Mug / Tumbler with Bamboo Lid & Glass Straw
+  if (lower.includes('মগ') || lower.includes('mug') || lower.includes('cup') || lower.includes('কাপ') ||
+      lower.includes('কফি') || lower.includes('চা') || lower.includes('coffee') || lower.includes('straw') ||
+      lower.includes('স্ট্র') || lower.includes('wavy') || lower.includes('wave') || lower.includes('ঢাকনা') ||
+      lower.includes('tumbler') || lower.includes('গ্লাস')) {
+    const mug = config.store.products.find(p => p.id === 'wavy-glass-mug') || config.store.products[1];
+    if (lower.includes('2') || lower.includes('২') || lower.includes('set') || lower.includes('জোড়া') || lower.includes('দুই')) {
+      return {
+        ...mug,
+        name: 'Clear Glass Coffee Mug with Lid & Straw (2 Pcs Set)',
+        salePrice: 950,
+        regularPrice: 1500
+      };
+    }
+    return {
+      ...mug,
+      name: 'Clear Glass Coffee Mug with Lid & Straw (1 Pcs)',
+      salePrice: 490,
+      regularPrice: 750
+    };
+  }
+
   // Water bottle queries
   if (lower.includes('বোতল') || lower.includes('bottle') || lower.includes('পানি') || lower.includes('water') || lower.includes('cp01') || lower.includes('cp02') || lower.includes('লিটার') || lower.includes('liter')) {
     const bottleItem = config.store.products.find(p => p.id === 'glass-bottle-combo');
@@ -75,14 +97,27 @@ function identifyProduct(text) {
     if (lower.includes('34') || lower.includes('৩৪')) {
       return config.store.products.find(p => p.id === 'korai-34cm');
     } else if (lower.includes('28') || lower.includes('২৮')) {
-      return { id: 'korai-28cm', name: '28CM SUS 316 Honeycomb Korai With Lid', salePrice: 2490 };
+      return { id: 'korai-28cm', name: '28CM SUS 316 Honeycomb Korai With Lid', salePrice: 2490, imageUrl: 'https://collectionhouse.com.bd/wp-content/uploads/2026/05/imgi_151_S69ae62965df04dea90a2819f5e68451bY.webp' };
     }
-    return config.store.products.find(p => p.id === 'korai-32cm') || config.store.products[1];
+    return config.store.products.find(p => p.id === 'korai-32cm') || config.store.products.find(p => p.id === 'korai-34cm');
   }
 
   // Jars queries
-  if (lower.includes('জার') || lower.includes('jar') || lower.includes('airtight') || lower.includes('এয়ারটাইট') || lower.includes('ভ্যাকুয়াম')) {
+  if (lower.includes('জার') || lower.includes('jar') || lower.includes('airtight') || lower.includes('এয়ারটাইট') || lower.includes('ভ্যাকুয়াম') || lower.includes('বয়াম')) {
+    if (lower.includes('1200') || lower.includes('১২০০') || lower.includes('সিঙ্গেল') || lower.includes('1 পিস')) {
+      return config.store.products.find(p => p.id === 'jar-1200ml') || {
+        name: 'Airtight Glass Jar Container with Lid, 1200 ML',
+        salePrice: 790,
+        regularPrice: 950,
+        imageUrl: 'https://collectionhouse.com.bd/wp-content/uploads/2026/05/41Ciw0KziBL.webp'
+      };
+    }
     return config.store.products.find(p => p.id === 'jars-3pcs-set');
+  }
+
+  // Tea cup set / tableware
+  if (lower.includes('টি কাপ') || lower.includes('tea set') || lower.includes('bone china') || lower.includes('১২ পিস') || lower.includes('12 pcs') || lower.includes('পিরিচ') || lower.includes('টেবিলওয়্যার')) {
+    return config.store.products.find(p => p.id === 'tea-cup-set-12pcs');
   }
 
   // Oil sprayer
@@ -255,11 +290,11 @@ function generateRuleBasedResponse(message, history = [], senderId = '') {
     }
   }
 
-  // 5. HONEYCOMB KORAI INQUIRIES
-  if (lower.includes('korai') || lower.includes('কড়াই') || lower.includes('honeycomb') || lower.includes('হনিকম্ব') || lower.includes('sus 316')) {
+  // 5. HONEYCOMB KORAI & KITCHENWARE INQUIRIES
+  if (lower.includes('korai') || lower.includes('কড়াই') || lower.includes('honeycomb') || lower.includes('হনিকম্ব') || lower.includes('sus 316') || lower.includes('কিচেন') || lower.includes('kitchen') || lower.includes('এক্সসরিজ')) {
     return {
       reply: config.store.templates.koraiOffer + `\n\nডেলিভারি চার্জ: ঢাকা ৮০ টাকা, ঢাকার বাইরে ১৫০ টাকা।\nঅর্ডার করতে নাম, মোবাইল নম্বর ও ঠিকানা দিন!`,
-      quickReplies: ['৩৪ সেমি অর্ডার করব', '৩২ সেমি অর্ডার করব', '২৮ সেমি অর্ডার করব', '💰 ডেলিভারি চার্জ কত?']
+      quickReplies: ['৩৪ সেমি অর্ডার করব', '৩২ সেমি অর্ডার করব', '২৮ সেমি অর্ডার করব', '🌐 ওয়েবসাইটে দেখুন']
     };
   }
 
@@ -267,7 +302,7 @@ function generateRuleBasedResponse(message, history = [], senderId = '') {
   if (lower.includes('jar') || lower.includes('জার') || lower.includes('airtight') || lower.includes('বয়ম')) {
     return {
       reply: config.store.templates.jarsOffer,
-      quickReplies: ['৩ পিস জার সেট অর্ডার করব', '💰 ডেলিভারি চার্জ কত?', '💧 বোতল কালেকশন']
+      quickReplies: ['৩ পিস জার সেট অর্ডার করব', '💰 ডেলিভারি চার্জ কত?', '🌐 ওয়েবসাইটে দেখুন']
     };
   }
 
@@ -279,7 +314,7 @@ function generateRuleBasedResponse(message, history = [], senderId = '') {
         `• **ঢাকার বাইরে:** ১৫০ টাকা (২-৪ কার্যদিবস)\n\n` +
         `✅ সারা বাংলাদেশে সম্পূর্ণ ক্যাশ অন ডেলিভারিতে পণ্য চেক করে টাকা পরিশোধের সুবিধা রয়েছে।\n\n` +
         `অর্ডার করতে আপনার নাম, ঠিকানা ও ফোন নম্বর পাঠান!`,
-      quickReplies: ['🛒 অর্ডার করতে চাই', '💧 বোতল অফার দেখুন', '📞 হটলাইন নম্বর']
+      quickReplies: ['🛒 অর্ডার করতে চাই', '💧 বোতল অফার দেখুন', '🌐 ওয়েবসাইটে দেখুন']
     };
   }
 
@@ -293,19 +328,19 @@ function generateRuleBasedResponse(message, history = [], senderId = '') {
         `৩. মোবাইল নম্বর\n` +
         `৪. সম্পূর্ণ ঠিকানা (জেলা ও থানা সহ)\n\n` +
         `আমরা কোনো অগ্রিম টাকা ছাড়াই ক্যাশ অন ডেলিভারিতে পার্সেল পাঠিয়ে দেব।`,
-      quickReplies: ['💧 ১ লিটার বোতল', '💧 ২ লিটার বোতল', '🍳 ৩৪ সেমি কড়াই', '📞 ফোনে কথা বলতে চাই']
+      quickReplies: ['💧 ১ লিটার বোতল', '💧 ২ লিটার বোতল', '🍳 ৩৪ সেমি কড়াই', '🌐 ওয়েবসাইটে দেখুন']
     };
   }
 
-  // 9. WEBSITE & CATALOG LINKS
-  if (lower.includes('website') || lower.includes('ওয়েবসাইট') || lower.includes('link') || lower.includes('ক্যাটালগ') || lower.includes('লিংক')) {
+  // 9. WEBSITE & CATALOG LINKS (🌐 ওয়েবসাইটে দেখুন)
+  if (lower.includes('website') || lower.includes('ওয়েবসাইট') || lower.includes('link') || lower.includes('ক্যাটালগ') || lower.includes('লিংক') || lower.includes('সাইট') || lower.includes('site') || lower.includes('সকল পণ্য') || lower.includes('সব পণ্য')) {
     return {
-      reply: `আমাদের ওয়েবসাইট থেকে সরাসরি ভিজিট করে পণ্য দেখতে পারেন:\n\n` +
-        `💧 পানির বোতল 🔗\nhttps://collectionhouse.com.bd/product-category/crockeries-bazarcrockeries-items/glass-water-bottle-crockeries-bazarcrockeries-items/\n\n` +
-        `🫙 কাচের জার 🔗\nhttps://collectionhouse.com.bd/product-category/crockeries-bazarcrockeries-items/glass-jars-and-kitchen-accessories-crockeries-bazarcrockeries-items/\n\n` +
-        `🍳 কিচেন সামগ্রী 🔗\nhttps://collectionhouse.com.bd/product-category/crockeries-bazarcrockeries-items/kitchenware-and-homeware-crockeries-bazarcrockeries-items/\n\n` +
-        `🌐 সকল পণ্য: https://collectionhouse.com.bd`,
-      quickReplies: ['💧 বোতলের দাম কত?', '🚚 ডেলিভারি চার্জ', '🛒 অর্ডার করব']
+      reply: `আমাদের ওয়েবসাইট থেকে দাম জানতে এক্টূ কষ্ট করে আপনার পছন্দের ক্যাটাগরিতে যাবেন ।\n\n` +
+        `পানির বোতল 🔗\nhttps://collectionhouse.com.bd/product-category/crockeries-bazarcrockeries-items/glass-water-bottle-crockeries-bazarcrockeries-items/\n\n` +
+        `কাচের জার 🔗\nhttps://collectionhouse.com.bd/product-category/crockeries-bazarcrockeries-items/glass-jars-and-kitchen-accessories-crockeries-bazarcrockeries-items/\n\n` +
+        `কিচেন এক্সসরিজ 🔗\nhttps://collectionhouse.com.bd/product-category/crockeries-bazarcrockeries-items/kitchenware-and-homeware-crockeries-bazarcrockeries-items/\n\n` +
+        `সকল পণ্য 🔗\nhttps://collectionhouse.com.bd`,
+      quickReplies: ['💧 পানির বোতল', '🫙 কাচের জার', '🍳 কিচেন এক্সসরিজ', '🌐 সকল পণ্য']
     };
   }
 
@@ -319,6 +354,7 @@ function generateRuleBasedResponse(message, history = [], senderId = '') {
 }
 
 const aiService = {
+  identifyProduct,
   async processMessage(userMessage, senderId = '', history = []) {
     return generateRuleBasedResponse(userMessage, history, senderId);
   }
