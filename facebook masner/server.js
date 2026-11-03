@@ -145,6 +145,8 @@ const server = http.createServer(async (req, res) => {
         }
 
         let userText = '';
+        let imageUrl = '';
+
         if (webhookEvent.message && webhookEvent.message.text) {
           userText = webhookEvent.message.text;
         } else if (webhookEvent.message && webhookEvent.message.quick_reply) {
@@ -153,30 +155,63 @@ const server = http.createServer(async (req, res) => {
           userText = webhookEvent.postback.payload;
         }
 
-        if (userText) {
+        // Handle customer image attachments (e.g. photo of bottle, korai, jars)
+        if (webhookEvent.message && webhookEvent.message.attachments && webhookEvent.message.attachments.length > 0) {
+          const img = webhookEvent.message.attachments.find(a => a.type === 'image');
+          if (img && img.payload && img.payload.url) {
+            imageUrl = img.payload.url;
+            if (!userText) {
+              userText = 'ছবি পাঠালাম, দাম ও বিস্তারিত কত?';
+            }
+          }
+        }
+
+        if (userText || imageUrl) {
           (async () => {
             try {
               // Send typing indicator
               await messengerService.sendAction(senderPsid, 'mark_seen');
               await messengerService.sendAction(senderPsid, 'typing_on');
 
-              // Save incoming user message
-              dbService.saveMessage(senderPsid, 'user', userText);
-              const history = dbService.getConversation(senderPsid);
+              let replyText = '';
+              let quickReplies = [];
 
-              // Generate AI / Bot response
-              const response = await aiService.processMessage(userText, senderPsid, history);
+              // If customer sent ONLY an image without text
+              if (imageUrl && (!webhookEvent.message.text || webhookEvent.message.text.trim() === '')) {
+                replyText = `✨ আপনার পাঠানো ছবিটি পেয়েছি! 🌸\n\n` +
+                  `আমাদের হট কালেকশন অফার মূল্য তালিকা:\n\n` +
+                  `🫙 **এয়ারটাইট গ্লাস জার (ভ্যাকুয়াম লিডসহ কাঁচের বয়াম):**\n` +
+                  `• ১২০০ মিলি (সিঙ্গেল): মাত্র ৳৭৯০ (রেগুলার ৳৯৫০)\n` +
+                  `• ৩ পিস সেট (১০০০মিলি, ১২০০মিলি, ২০০০মিলি): মাত্র ৳২,৭৯০\n` +
+                  `• ৩ পিস ১০০০ মিলি সেট: মাত্র ৳১,৯৯০\n\n` +
+                  `💧 **প্রিমিয়াম কাঁচের পানির বোতল (ফ্রি কাভারসহ):**\n` +
+                  `• ১ লিটার: ৳১০৫০ | ১.৫ লিটার: ৳১৩৫০ | ২ লিটার: ৳১৫৯০ | ৩ পিস কম্বো: ৳৩৫৯০\n\n` +
+                  `🍳 **SUS 316 হনিকম্ব কড়াই (ঢাকনাসহ):**\n` +
+                  `• ৩৪ সেমি: ৳৩১৯০ | ৩২ সেমি: ৳২৯৯০ | ২৮ সেমি: ৳২৪৯০\n\n` +
+                  `🚚 ডেলিভারি চার্জ: ঢাকা ৮০ টাকা, ঢাকার বাইরে ১৫০ টাকা।\n` +
+                  `💵 সম্পূর্ণ ক্যাশ অন ডেলিভারিতে চেক করে মূল্য পরিশোধ করতে পারবেন।\n\n` +
+                  `আপনি কোন পণ্যটি নিতে চাচ্ছেন? অর্ডার করতে আপনার নাম, সম্পূর্ণ ঠিকানা ও মোবাইল নম্বর লিখে জানান 😊`;
+
+                quickReplies = ['🫙 জার সেট অর্ডার করব', '💧 পানির বোতল অর্ডার', '🍳 হনিকম্ব কড়াই', '🌐 ওয়েবসাইটে দেখুন'];
+              } else {
+                // Standard text / inquiry processing
+                dbService.saveMessage(senderPsid, 'user', userText);
+                const history = dbService.getConversation(senderPsid);
+                const response = await aiService.processMessage(userText, senderPsid, history);
+                replyText = response.reply;
+                quickReplies = response.quickReplies;
+              }
 
               // Stop typing and send reply
               await messengerService.sendAction(senderPsid, 'typing_off');
-              if (response.quickReplies && response.quickReplies.length > 0) {
-                await messengerService.sendQuickReplies(senderPsid, response.reply, response.quickReplies);
+              if (quickReplies && quickReplies.length > 0) {
+                await messengerService.sendQuickReplies(senderPsid, replyText, quickReplies);
               } else {
-                await messengerService.sendTextMessage(senderPsid, response.reply);
+                await messengerService.sendTextMessage(senderPsid, replyText);
               }
 
               // Save bot reply to history
-              dbService.saveMessage(senderPsid, 'bot', response.reply);
+              dbService.saveMessage(senderPsid, 'bot', replyText);
             } catch (err) {
               console.error('Error handling webhook message:', err);
             }
