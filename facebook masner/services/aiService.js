@@ -1,7 +1,47 @@
 // AI Engine for Collection House Messenger Bot (Trained on Real Brand Chat History)
 const https = require('https');
+const fs = require('fs');
+const path = require('path');
 const config = require('../config');
 const dbService = require('./dbService');
+
+// Load full 641 products catalog from collectionhouse.com.bd
+let productsCatalog = [];
+const catalogPath = path.join(__dirname, '../data/products_catalog.json');
+try {
+  if (fs.existsSync(catalogPath)) {
+    productsCatalog = JSON.parse(fs.readFileSync(catalogPath, 'utf8'));
+    console.log(`✅ Loaded ${productsCatalog.length} products from WooCommerce catalog.`);
+  }
+} catch (e) {
+  console.warn('⚠️ Could not load products catalog:', e.message);
+}
+
+// Search all 641 WooCommerce products by keywords
+function searchCatalog(query) {
+  if (!query || productsCatalog.length === 0) return null;
+  const terms = query.toLowerCase().split(/\s+/).filter(t => t.length > 1);
+  if (terms.length === 0) return null;
+
+  let bestMatch = null;
+  let bestScore = 0;
+
+  for (const p of productsCatalog) {
+    const target = (p.name + ' ' + (p.category || '')).toLowerCase();
+    let score = 0;
+    for (const term of terms) {
+      if (target.includes(term)) {
+        score += term.length;
+      }
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      bestMatch = p;
+    }
+  }
+
+  return bestScore >= 3 ? bestMatch : null;
+}
 
 // Normalize Bengali numbers to English digits
 function normalizeDigits(text) {
@@ -42,11 +82,23 @@ function extractAddress(text) {
 function identifyProduct(text) {
   const lower = (text || '').toLowerCase();
 
-  // Wavy / Ripple Glass Coffee Mug / Tumbler with Bamboo Lid & Glass Straw
-  if (lower.includes('মগ') || lower.includes('mug') || lower.includes('cup') || lower.includes('কাপ') ||
-      lower.includes('কফি') || lower.includes('চা') || lower.includes('coffee') || lower.includes('straw') ||
-      lower.includes('স্ট্র') || lower.includes('wavy') || lower.includes('wave') || lower.includes('ঢাকনা') ||
-      lower.includes('tumbler') || lower.includes('গ্লাস')) {
+  // 1. Ceramic Mugs with Lid and Spoon (Serene & Concise)
+  if (lower.includes('ceramic') || lower.includes('সিরামিক') || lower.includes('serene') || lower.includes('concise') || lower.includes('চামচ') || (lower.includes('মগ') && (lower.includes('কালো') || lower.includes('সাদা') || lower.includes('২ পিস') || lower.includes('সেট') || lower.includes('2pcs')))) {
+    return {
+      id: 24685,
+      name: '2pcs set ceramic mug with lid and spoon 450ml',
+      regularPrice: 2450,
+      salePrice: 1990,
+      price: 1990,
+      imageUrl: 'https://collectionhouse.com.bd/wp-content/uploads/2026/10/imgi_150_IMG_1781339085252.webp',
+      url: 'https://collectionhouse.com.bd/product/2pcs-set-ceramic-mug-with-lid-and-spoon-450ml/',
+      category: 'Coffee Mug / Tea Mug',
+      description: '২ পিস প্রিমিয়াম সিরামিক কফি/টি মগ সেট সাথে সিরামিক ঢাকনা ও গোল্ডেন চামচ।'
+    };
+  }
+
+  // 2. Wavy / Ripple Glass Coffee Mug / Tumbler with Bamboo Lid & Glass Straw
+  if (lower.includes('wavy') || lower.includes('wave') || (lower.includes('মগ') && (lower.includes('কাঁচ') || lower.includes('কাচ') || lower.includes('glass') || lower.includes('স্ট্র') || lower.includes('বাঁশ'))) || lower.includes('tumbler')) {
     const mug = config.store.products.find(p => p.id === 'wavy-glass-mug') || config.store.products[1];
     if (lower.includes('2') || lower.includes('২') || lower.includes('set') || lower.includes('জোড়া') || lower.includes('দুই')) {
       return {
@@ -123,6 +175,22 @@ function identifyProduct(text) {
   // Oil sprayer
   if (lower.includes('অয়েল') || lower.includes('oil') || lower.includes('স্প্রে') || lower.includes('sprayer') || lower.includes('তেল')) {
     return config.store.products.find(p => p.id === 'oil-sprayer-470ml');
+  }
+
+  // Search full 641 products catalog from website collectionhouse.com.bd
+  const catalogFound = searchCatalog(text);
+  if (catalogFound) {
+    return {
+      id: catalogFound.id,
+      name: catalogFound.name,
+      regularPrice: catalogFound.regularPrice || catalogFound.price,
+      salePrice: catalogFound.salePrice || catalogFound.price,
+      price: catalogFound.salePrice || catalogFound.price,
+      imageUrl: catalogFound.imageUrl,
+      url: catalogFound.url,
+      category: catalogFound.category,
+      description: `${catalogFound.name} আমাদের স্টোরে সেরা অফার মূল্যে পাওয়া যাচ্ছে।`
+    };
   }
 
   return null;
@@ -353,8 +421,91 @@ function generateRuleBasedResponse(message, history = [], senderId = '') {
   };
 }
 
+// Helper: Download image and return base64
+function downloadImageBase64(imageUrl) {
+  return new Promise((resolve, reject) => {
+    https.get(imageUrl, (res) => {
+      if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+        return downloadImageBase64(res.headers.location).then(resolve).catch(reject);
+      }
+      const chunks = [];
+      res.on('data', c => chunks.push(c));
+      res.on('end', () => {
+        const buffer = Buffer.concat(chunks);
+        resolve({
+          base64: buffer.toString('base64'),
+          mimeType: (res.headers['content-type'] || 'image/jpeg').split(';')[0]
+        });
+      });
+      res.on('error', reject);
+    }).on('error', reject);
+  });
+}
+
+// Multimodal Vision AI using Google Gemini
+async function identifyProductWithVision(imageUrl) {
+  const apiKey = process.env.GEMINI_API_KEY || config.ai.geminiApiKey;
+  if (!apiKey || !imageUrl) return null;
+
+  try {
+    const { base64, mimeType } = await downloadImageBase64(imageUrl);
+    const postData = JSON.stringify({
+      contents: [{
+        parts: [
+          { text: 'You are an e-commerce product recognition engine for "Collection house BD" (collectionhouse.com.bd). Analyze this product photo. Identify what this product is. Return ONLY a single line of 3 to 5 English search keywords to match with our WooCommerce catalog (e.g. "ceramic mug with lid and spoon").' },
+          {
+            inline_data: {
+              mime_type: mimeType,
+              data: base64
+            }
+          }
+        ]
+      }]
+    });
+
+    const url = new URL(`https://generativelanguage.googleapis.com/v1beta/models/${config.ai.geminiModel}:generateContent?key=${apiKey}`);
+    return new Promise((resolve) => {
+      const req = https.request({
+        hostname: url.hostname,
+        path: url.pathname + url.search,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(postData)
+        },
+        timeout: 10000
+      }, (res) => {
+        let body = '';
+        res.on('data', c => body += c);
+        res.on('end', () => {
+          try {
+            const data = JSON.parse(body);
+            const text = data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0].text;
+            if (text) {
+              console.log('🤖 Vision AI identified keywords:', text.trim());
+              const matched = searchCatalog(text.trim());
+              resolve(matched);
+            } else {
+              resolve(null);
+            }
+          } catch(e) { resolve(null); }
+        });
+      });
+      req.on('error', (err) => { console.error('Gemini vision request error:', err.message); resolve(null); });
+      req.on('timeout', () => { req.destroy(); resolve(null); });
+      req.write(postData);
+      req.end();
+    });
+  } catch (err) {
+    console.error('Vision analysis error:', err.message);
+    return null;
+  }
+}
+
 const aiService = {
   identifyProduct,
+  identifyProductWithVision,
+  searchCatalog,
   async processMessage(userMessage, senderId = '', history = []) {
     return generateRuleBasedResponse(userMessage, history, senderId);
   }
