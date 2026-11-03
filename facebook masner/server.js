@@ -175,24 +175,26 @@ const server = http.createServer(async (req, res) => {
 
               let replyText = '';
               let quickReplies = [];
+              let websiteImageUrl = null;
 
-              // If customer sent ONLY an image without text
-              if (imageUrl && (!webhookEvent.message.text || webhookEvent.message.text.trim() === '')) {
-                replyText = `✨ আপনার পাঠানো ছবিটি পেয়েছি! 🌸\n\n` +
-                  `আমাদের হট কালেকশন অফার মূল্য তালিকা:\n\n` +
-                  `🫙 **এয়ারটাইট গ্লাস জার (ভ্যাকুয়াম লিডসহ কাঁচের বয়াম):**\n` +
-                  `• ১২০০ মিলি (সিঙ্গেল): মাত্র ৳৭৯০ (রেগুলার ৳৯৫০)\n` +
-                  `• ৩ পিস সেট (১০০০মিলি, ১২০০মিলি, ২০০০মিলি): মাত্র ৳২,৭৯০\n` +
-                  `• ৩ পিস ১০০০ মিলি সেট: মাত্র ৳১,৯৯০\n\n` +
-                  `💧 **প্রিমিয়াম কাঁচের পানির বোতল (ফ্রি কাভারসহ):**\n` +
-                  `• ১ লিটার: ৳১০৫০ | ১.৫ লিটার: ৳১৩৫০ | ২ লিটার: ৳১৫৯০ | ৩ পিস কম্বো: ৳৩৫৯০\n\n` +
-                  `🍳 **SUS 316 হনিকম্ব কড়াই (ঢাকনাসহ):**\n` +
-                  `• ৩৪ সেমি: ৳৩১৯০ | ৩২ সেমি: ৳২৯৯০ | ২৮ সেমি: ৳২৪৯০\n\n` +
-                  `🚚 ডেলিভারি চার্জ: ঢাকা ৮০ টাকা, ঢাকার বাইরে ১৫০ টাকা।\n` +
-                  `💵 সম্পূর্ণ ক্যাশ অন ডেলিভারিতে চেক করে মূল্য পরিশোধ করতে পারবেন।\n\n` +
-                  `আপনি কোন পণ্যটি নিতে চাচ্ছেন? অর্ডার করতে আপনার নাম, সম্পূর্ণ ঠিকানা ও মোবাইল নম্বর লিখে জানান 😊`;
+              // If customer sent an image attachment
+              if (imageUrl) {
+                const matched = aiService.identifyProduct(userText);
+                const product = matched || config.store.products.find(p => p.id === 'wavy-glass-mug') || config.store.products[0];
 
-                quickReplies = ['🫙 জার সেট অর্ডার করব', '💧 পানির বোতল অর্ডার', '🍳 হনিকম্ব কড়াই', '🌐 ওয়েবসাইটে দেখুন'];
+                replyText = `✨ আপনার পাঠানো প্রোডাক্টটি আমাদের স্টোরে এভেইলেবল আছে! 🌸\n\n` +
+                  `📌 **${product.name}**\n` +
+                  `💰 অফার মূল্য: মাত্র **৳${product.salePrice}**${product.regularPrice ? ` (রেগুলার মূল্য ৳${product.regularPrice})` : ''}\n\n` +
+                  `🚚 **ডেলিভারি চার্জ:** ঢাকা ৮০ টাকা, ঢাকার বাইরে ১৫০ টাকা।\n` +
+                  `💵 **ক্যাশ অন ডেলিভারি:** পণ্য হাতে পেয়ে সম্পূর্ণ চেক করে মূল্য পরিশোধ করতে পারবেন।\n\n` +
+                  `অর্ডার কনফার্ম করতে আপনার **নাম, সম্পূর্ণ ঠিকানা ও মোবাইল নম্বর** লিখে জানান 😊`;
+
+                quickReplies = ['🛒 অর্ডার করতে চাই', '💰 ডেলিভারি চার্জ কত?', '🌐 ওয়েবসাইটে দেখুন'];
+                if (product.imageUrl) {
+                  websiteImageUrl = product.imageUrl;
+                }
+
+                dbService.saveMessage(senderPsid, 'user', `[ছবি পাঠিয়েছে] ${userText}`);
               } else {
                 // Standard text / inquiry processing
                 dbService.saveMessage(senderPsid, 'user', userText);
@@ -200,6 +202,18 @@ const server = http.createServer(async (req, res) => {
                 const response = await aiService.processMessage(userText, senderPsid, history);
                 replyText = response.reply;
                 quickReplies = response.quickReplies;
+                if (response.product && response.product.imageUrl) {
+                  websiteImageUrl = response.product.imageUrl;
+                }
+              }
+
+              // Send official website image first if available
+              if (websiteImageUrl) {
+                try {
+                  await messengerService.sendImage(senderPsid, websiteImageUrl);
+                } catch (imgErr) {
+                  console.error('Failed to send product image:', imgErr);
+                }
               }
 
               // Stop typing and send reply

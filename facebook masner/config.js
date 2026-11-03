@@ -26,7 +26,7 @@ const config = {
   // Meta Graph API & Webhook Verification
   meta: {
     verifyToken: process.env.VERIFY_TOKEN || 'collection_house_webhook_token_2026',
-    pageAccessToken: process.env.PAGE_ACCESS_TOKEN || '',
+    pageAccessToken: process.env.PAGE_ACCESS_TOKEN || 'EAATYZB4sdmwcBSyFFmldE2Ynnc73flGMhVNZB1e98K1wMAGFWdnYxtMHmOLXtadxUmUwMKRA7tZCqfSoZBmZAz1Hn6cAgHKcc2Nxd5KU5xdoOCGlQjZBNMuzCsN8ujhnEzXoZCwn5lv5aZBs4ORZAUeVcYWRnZAe0ZAk3LcMMVpP5hPyz3UtzW98Ot25jiU5yuSfKLk1A8kidMZD',
     appSecret: process.env.APP_SECRET || 'cdf02a146b9245f62e203b72d0ff112f',
     pageId: process.env.PAGE_ID || '102242299427916',
     pageName: process.env.PAGE_NAME || 'Collection house BD',
@@ -102,16 +102,26 @@ const config = {
 (প্রতিটি বোতলের সাথে ফ্রী প্রোটেক্টিভ কাভার বুঝে নিন)
 
 🚚 ডেলিভারি চার্জ: ঢাকা ৮০ টাকা, ঢাকার বাইরে ১৫০ টাকা।
+💵 সম্পূর্ণ ক্যাশ অন ডেলিভারিতে চেক করে মূল্য পরিশোধ করতে পারবেন।
+
+🔗 পানির বোতল ক্যাটাগরি লিংক:
+https://collectionhouse.com.bd/product-category/crockeries-bazarcrockeries-items/glass-water-bottle-crockeries-bazarcrockeries-items/
 
 অর্ডার করতে চাইলে আপনার নাম, সম্পূর্ণ ঠিকানা ও মোবাইল নম্বর লিখে পাঠান 😊`,
 
-      jarsOffer: `🫙 Airtight Food Storage Glass Jars (ভ্যাকুয়াম লিডসহ):
+      jarsOffer: `🫙 Airtight Food Storage Glass Jars (ভ্যাকুয়াম লিডসহ কাঁচের বয়াম):
 
-🔹 ৩ পিস সেট (১০০০মিলি, ১২০০মিলি, ২০০০মিলি) — ২৭৯০ টাকা (রেগুলার ৩৪৫০৳)
+🔹 ১২০০মিলি সিঙ্গেল জার — ৭৯০ টাকা (রেগুলার ৯৫০৳)
 🔹 ৩ পিস ১০০০মিলি সেট — ১৯৯০ টাকা
-🔹 ১২০০মিলি সিঙ্গেল জার — ৭৯০ টাকা
+🔹 ৩ পিস সেট (১০০০মিলি, ১২০০মিলি, ২০০০মিলি) — ২৭৯০ টাকা (রেগুলার ৩৪৫০৳)
 
 খাবার থাকে ১০০% আর্দ্রতা ও ময়েশ্চারমুক্ত।
+🚚 ডেলিভারি চার্জ: ঢাকা ৮০ টাকা, ঢাকার বাইরে ১৫০ টাকা।
+💵 ক্যাশ অন ডেলিভারি সুবিধা রয়েছে।
+
+🔗 কাচের জার ক্যাটাগরি লিংক:
+https://collectionhouse.com.bd/product-category/crockeries-bazarcrockeries-items/glass-jars-and-kitchen-accessories-crockeries-bazarcrockeries-items/
+
 অর্ডার করতে নাম, মোবাইল নম্বর ও ঠিকানা দিন!`,
 
       koraiOffer: `🍳 SUS 316 Honeycomb Korai With Lid:
@@ -120,7 +130,11 @@ const config = {
 🔹 ৩২ সেমি কড়াই ঢাকনাসহ — ২৯৯০ টাকা
 🔹 ২৮ সেমি কড়াই ঢাকনাসহ — ২৪৯০ টাকা
 
-১০০% ফুড গ্রেড SUS 316 স্টেইনলেস স্টিল, স্ক্র্যাচ-প্রুফ।`
+১০০% ফুড গ্রেড SUS 316 স্টেইনলেস স্টিল, স্ক্র্যাচ-প্রুফ।
+🚚 ডেলিভারি চার্জ: ঢাকা ৮০ টাকা, ঢাকার বাইরে ১৫০ টাকা।
+
+🔗 কিচেন এক্সসরিজ ক্যাটাগরি লিংক:
+https://collectionhouse.com.bd/product-category/crockeries-bazarcrockeries-items/kitchenware-and-homeware-crockeries-bazarcrockeries-items/`
     },
 
     // Curated Popular Products from collectionhouse.com.bd
@@ -129,6 +143,7 @@ const config = {
         id: 'glass-bottle-combo',
         name: 'Glass Water Bottle With Protective Cover (1L, 1.5L, 2L)',
         salePrice: 1050,
+        imageUrl: 'https://collectionhouse.com.bd/wp-content/uploads/2026/09/1000034761.jpg',
         variants: [
           { size: '500ml', price: 550 },
           { size: '1L (1000ml)', price: 1050 },
@@ -141,10 +156,25 @@ const config = {
         url: 'https://collectionhouse.com.bd/product-category/crockeries-bazarcrockeries-items/glass-water-bottle-crockeries-bazarcrockeries-items/'
       },
       {
+        id: 'wavy-glass-mug',
+        name: 'Clear Glass Coffee Mug with Bamboo Lid and Straw',
+        regularPrice: 750,
+        salePrice: 490,
+        imageUrl: 'https://collectionhouse.com.bd/wp-content/uploads/2026/05/img_6392.jpeg',
+        variants: [
+          { size: '1 Pcs Set', price: 490, regular: 750 },
+          { size: '2 Pcs Set', price: 950, regular: 1500 }
+        ],
+        category: 'Coffee & Juice Mug',
+        description: 'প্রিমিয়াম স্টাইলিশ গ্লাস কফি ও জুস মগ সাথে ব্যাম্বু লিড (বাঁশের ঢাকনা) ও কাঁচের স্ট্র।',
+        url: 'https://collectionhouse.com.bd/product/5pcs-set-clear-square-glass-coffee-mugs-with-lid-and-straw-2-2-2-2/'
+      },
+      {
         id: 'korai-34cm',
         name: '34CM SUS 316 Honeycomb Korai With Lid',
         regularPrice: 3650,
         salePrice: 3190,
+        imageUrl: 'https://collectionhouse.com.bd/wp-content/uploads/2026/05/imgi_453_71JsdgXsDsL._SL1500.webp',
         category: 'Tableware / Cookware',
         description: 'অরিজিনাল SUS 316 ফুড গ্রেড স্টেইনলেস স্টিল হনিকম্ব নন-স্টিক কড়াই। ঢাকনাসহ।',
         url: 'https://collectionhouse.com.bd/product/34cm-sus-316-honeycomb-korai-with-lid/'
@@ -154,6 +184,7 @@ const config = {
         name: '32CM SUS 316 Honeycomb Korai With Lid',
         regularPrice: 3990,
         salePrice: 2990,
+        imageUrl: 'https://collectionhouse.com.bd/wp-content/uploads/2026/05/imgi_453_71JsdgXsDsL._SL1500.webp',
         category: 'Tableware / Cookware',
         description: 'অরিজিনাল SUS 316 স্টেইনলেস স্টিল প্রিমিয়াম হনিকম্ব কড়াই। ঢাকনাসহ।',
         url: 'https://collectionhouse.com.bd/product/32cm-sus-316-honeycomb-korai-with-lid/'
@@ -163,15 +194,37 @@ const config = {
         name: 'Airtight Food Storage Glass Jars 3PCS Set (1000ml, 1200ml, 2000ml)',
         regularPrice: 3450,
         salePrice: 2790,
+        imageUrl: 'https://collectionhouse.com.bd/wp-content/uploads/2025/12/Untitled-design-1.avif',
         category: 'Glass Jars & Kitchen Accessories',
         description: 'ভ্যাকুয়াম গ্লাস লিডসহ ৩ পিসের এয়ারটাইট কাঁচের জার সেট।',
         url: 'https://collectionhouse.com.bd/product/airtight-food-storage-glass-jars-with-vacuum-glass-lids-3pcs-set-1000ml-1200ml-2000ml/'
+      },
+      {
+        id: 'jar-1200ml',
+        name: 'Airtight Glass Jar Container with Lid, 1200 ML',
+        regularPrice: 950,
+        salePrice: 790,
+        imageUrl: 'https://collectionhouse.com.bd/wp-content/uploads/2026/05/41Ciw0KziBL.webp',
+        category: 'Glass Jars & Kitchen Accessories',
+        description: '১২০০ মিলি সিঙ্গেল ভ্যাকুয়াম এয়ারটাইট কাঁচের বয়াম।',
+        url: 'https://collectionhouse.com.bd/product/airtight-glass-jar-container-with-lid-1200-ml/'
+      },
+      {
+        id: 'tea-cup-set-12pcs',
+        name: 'Fine Bone Tea Cup Set 6+6 Pcs (12 Pcs) - SC18T004',
+        regularPrice: 5380,
+        salePrice: 4880,
+        imageUrl: 'https://collectionhouse.com.bd/wp-content/uploads/2026/08/SC18T004-1.jpg',
+        category: 'Tableware / Tea Sets',
+        description: 'প্রিমিয়াম ফাইন বোন চায়না ১২ পিস টি কাপ ও সসার সেট।',
+        url: 'https://collectionhouse.com.bd/product/fine-bone-tea-cup-set-66-pcs-12-pcs-sc18t004/'
       },
       {
         id: 'oil-sprayer-470ml',
         name: '2 In 1 Glass Olive Oil Sprayer & Pourer 470ml',
         regularPrice: 850,
         salePrice: 650,
+        imageUrl: 'https://collectionhouse.com.bd/wp-content/uploads/2026/05/imgi_453_71JsdgXsDsL._SL1500.webp',
         category: 'Kitchen Accessories',
         description: 'তেল স্প্রে এবং ঢালার ২-ইন-১ গ্লাস বোটল। রান্নায় ও সালাদে তেল নিয়ন্ত্রণে দারুণ কার্যকর।',
         url: 'https://collectionhouse.com.bd/product/oil-sprayer-for-cooking-470ml-2-in-1-glass-olive-oil-spray/'

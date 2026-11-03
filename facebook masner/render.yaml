@@ -11,7 +11,7 @@ services:
       - key: VERIFY_TOKEN
         value: collection_house_webhook_token_2026
       - key: PAGE_ACCESS_TOKEN
-        value: EAATYZB4sdmwcBS1i9UsKWeq0znxYqFYhmZCNoXSzJlLJwchzL8Fp6QAT21POgnyhZBUIzC90LvlRKCuYLnZAA7NUrZA2qD3GigUZCb04LyM5IrLczfGGxaSWaioJi8W8GoJRItqeNxgXOsePflGJLc5IDxDayVCbSr4zfRJ1SvFZBlLFZCSJEFobf7hJFD0uY0sKjXetnZCiAwYTvp0Any0iEgOxTFOlZBXxtbBEZBzjSiL6GbmEZCNj3P33zV64rwZDZD
+        value: EAATYZB4sdmwcBSyFFmldE2Ynnc73flGMhVNZB1e98K1wMAGFWdnYxtMHmOLXtadxUmUwMKRA7tZCqfSoZBmZAz1Hn6cAgHKcc2Nxd5KU5xdoOCGlQjZBNMuzCsN8ujhnEzXoZCwn5lv5aZBs4ORZAUeVcYWRnZAe0ZAk3LcMMVpP5hPyz3UtzW98Ot25jiU5yuSfKLk1A8kidMZD
       - key: PAGE_ID
         value: "102242299427916"
       - key: PAGE_NAME
